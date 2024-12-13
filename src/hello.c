@@ -1,6 +1,6 @@
 // hello.c
 #include <stdio.h>
-#include "include/hello.h"
+#include "hello.h"
 
 void print_hello(void)
 {
