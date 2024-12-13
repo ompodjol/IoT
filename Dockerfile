@@ -4,14 +4,14 @@ FROM gcc:latest
 # Use an official base image
 #FROM ubuntu:latest
 
-# unit tests package needed for CMocka
-# libcunit1-dev
-
 # Install Git
 RUN apt-get update && \
     apt-get install -y git \
-    libcunit1-dev && \
     rm -rf /var/lib/apt/lists/*
+
+# Install cmocka
+RUN apt-get update && \
+    apt-get install -y libcmocka-dev
 
 # Set the working directory
 WORKDIR /app
