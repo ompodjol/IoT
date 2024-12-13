@@ -2,6 +2,13 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include <cmocka.h>
+#include <string.h>
+#include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <inttypes.h>
 #include "hello.h"
 
 static void test_print_hello(void **state)
