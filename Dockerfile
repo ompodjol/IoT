@@ -4,14 +4,14 @@ FROM gcc:latest
 # Use an official base image
 #FROM ubuntu:latest
 
+# Install cmocka
+RUN apt-get update && \
+    apt-get install -y libcmocka-dev
+
 # Install Git
 RUN apt-get update && \
     apt-get install -y git \
     rm -rf /var/lib/apt/lists/*
-
-# Install cmocka
-RUN apt-get update && \
-    apt-get install -y libcmocka-dev
 
 # Set the working directory
 WORKDIR /app
