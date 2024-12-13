@@ -5,13 +5,13 @@
 #include <cmocka.h>
 #include "hello.h"
 
-/*int main(void)
+int main(void)
 {
-print_hello();
-return 0;
+    print_hello();
+    return 0;
 }
-*/
 
+/*
 // Declare your test function
 static void test_print_hello(void **state)
 {
@@ -25,3 +25,4 @@ int main(void)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }
+*/
