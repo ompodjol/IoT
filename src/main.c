@@ -1,8 +1,8 @@
 // main.c
-#include "hello.h"
+#include "include/hello.h"
 
-int main(void) {
+int main(void)
+{
     print_hello();
     return 0;
 }
-
