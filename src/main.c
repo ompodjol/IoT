@@ -5,11 +5,12 @@
 #include <cmocka.h>
 #include "hello.h"
 
-#int main(void)
-#{
-#print_hello();
-#return 0;
-#}
+/*int main(void)
+{
+print_hello();
+return 0;
+}
+*/
 
 // Declare your test function
 static void test_print_hello(void **state)
