@@ -24,7 +24,7 @@ WORKDIR /app/IoT
 
 # Build the application
 RUN mkdir -p build && \
-    gcc -I include src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program
+    gcc -Iinclude src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program
 
 
 # Set the entry point to run the application
