@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include <cmocka.h>
-#include "include/hello.h"
+#include "hello.h"
 
 static void test_print_hello(void **state)
 {
