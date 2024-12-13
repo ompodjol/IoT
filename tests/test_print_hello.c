@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <setjmp.h>
+#include <unistd.h>
 #include <cmocka.h>
 #include "hello.h"
 
