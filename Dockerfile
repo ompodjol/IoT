@@ -24,8 +24,10 @@ WORKDIR /app/IoT
 
 # Build the application
 RUN mkdir -p build && \
-    gcc -Iinclude src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program && \
-    gcc -Iinclude -o test_print_hello test_print_hello.c hello.c -lcmocka
+    gcc -Iinclude src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program
+
+# Compile the test application
+gcc -Iinclude -o test_print_hello test_print_hello.c hello.c -lcmocka
 
 
 
