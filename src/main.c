@@ -5,24 +5,20 @@
 #include <cmocka.h>
 #include "hello.h"
 
-int main(void)
+/*int main(void)
 {
     print_hello();
     return 0;
 }
+*/
 
-/*
-// Declare your test function
 static void test_print_hello(void **state)
 {
-    // Your test code here
-}
+    (void)state; // Unused
+    memset(buffer, 0, sizeof(buffer));
 
-int main(void)
-{
-    const struct CMUnitTest tests[] = {
-        cmocka_unit_test(test_print_hello),
-    };
-    return cmocka_run_group_tests(tests, NULL, NULL);
+    print_hello();
+
+    fflush(stdout);
+    assert_string_equal(buffer, "Hello, World!\n");
 }
-*/

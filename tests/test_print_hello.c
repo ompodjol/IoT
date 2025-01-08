@@ -1,65 +1,51 @@
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include <cmocka.h>
 #include <stdio.h>
 #include <string.h>
-#include <setjmp.h>
-#include <unistd.h>
-#include <cmocka.h>
 #include "hello.h"
+
+static char buffer[256];
+static FILE *orig_stdout;
+
+static int setup(void **state)
+{
+    (void)state; // Unused
+    orig_stdout = stdout;
+    fflush(stdout);
+    stdout = fmemopen(buffer, sizeof(buffer), "w");
+    if (stdout == NULL)
+    {
+        return -1;
+    }
+    return 0;
+}
+
+static int teardown(void **state)
+{
+    (void)state; // Unused
+    fflush(stdout);
+    stdout = orig_stdout;
+    return 0;
+}
 
 static void test_print_hello(void **state)
 {
-    (void)state; // Unused parameter
+    (void)state; // Unused
+    memset(buffer, 0, sizeof(buffer));
 
-    // Redirect stdout to a temporary file
-    FILE *temp_file = tmpfile();
-    if (temp_file == NULL)
-    {
-        fail_msg("Failed to create temporary file");
-    }
-
-    // Save original stdout
-    int original_stdout_fd = dup(fileno(stdout));
-    if (original_stdout_fd == -1)
-    {
-        fclose(temp_file);
-        fail_msg("Failed to duplicate stdout file descriptor");
-    }
-
-    // Redirect stdout to temp_file
-    if (dup2(fileno(temp_file), fileno(stdout)) == -1)
-    {
-        fclose(temp_file);
-        close(original_stdout_fd);
-        fail_msg("Failed to redirect stdout to temporary file");
-    }
-
-    // Call the function that prints to stdout
     print_hello();
 
-    // Flush stdout to ensure all output is written
     fflush(stdout);
-
-    // Rewind the temporary file to read its content
-    rewind(temp_file);
-
-    // Read the output
-    char buffer[256];
-    if (fgets(buffer, sizeof(buffer), temp_file) == NULL)
-    {
-        fclose(temp_file);
-        close(original_stdout_fd);
-        fail_msg("Failed to read from temporary file");
-    }
-
-    // Restore original stdout
-    if (dup2(original_stdout_fd, fileno(stdout)) == -1)
-    {
-        fclose(temp_file);
-        close(original_stdout_fd);
-        fail_msg("Failed to restore original stdout");
-    }
-    close(original_stdout_fd);
-    fclose(temp_file);
-
-    // Verify the output
     assert_string_equal(buffer, "Hello, World!\n");
+}
+
+int main(void)
+{
+    const struct CMUnitTest tests[] = {
+        cmocka_unit_test_setup_teardown(test_hello, setup, teardown),
+    };
+
+    return cmocka_run_group_tests(tests, NULL, NULL);
 }

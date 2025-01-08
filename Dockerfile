@@ -6,7 +6,8 @@ FROM gcc:latest
 
 # Install cmocka
 RUN apt-get update && \
-    apt-get install -y libcmocka-dev
+    apt-get install -y libcmocka-dev && \
+    apt-get install -y check
 
 # Install Git
 RUN apt-get update && \
@@ -24,11 +25,11 @@ WORKDIR /app/IoT
 
 # Build the application
 RUN mkdir -p build && \
-    gcc -Iinclude src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program
+    gcc -Iinclude src/hello.c src/main.c -o build/hello
+#gcc -Iinclude src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program
 
 # Compile the test application
-#RUN gcc -Iinclude -o build/test_print_hello tests/test_print_hello.c src/hello.c src/main.c -lcmocka
-
+RUN gcc -Iinclude -o test_hello tests/test_hello.c src/hello.c src/main.c -lcmocka
 
 
 # Set the entry point to run the application
