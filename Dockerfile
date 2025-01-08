@@ -25,11 +25,11 @@ WORKDIR /app/IoT
 
 # Build the application
 RUN mkdir -p build && \
-    gcc -Iinclude src/hello.c src/main.c -o build/hello
+    gcc -Iinclude src/print_hello.c src/main.c -o build/print_hello
 #gcc -Iinclude src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program
 
 # Compile the test application
-RUN gcc -Iinclude -o test_hello tests/test_hello.c src/hello.c src/main.c -lcmocka
+RUN gcc -Iinclude tests/test_print_hello.c src/print_hello.c src/main.c -lcmocka -std=c11 -o test_print_hello
 
 
 # Set the entry point to run the application
