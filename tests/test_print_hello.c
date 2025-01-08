@@ -44,7 +44,7 @@ static void test_print_hello(void **state)
 int main(void)
 {
     const struct CMUnitTest tests[] = {
-        cmocka_unit_test_setup_teardown(test_hello, setup, teardown),
+        cmocka_unit_test_setup_teardown(test_print_hello, setup, teardown),
     };
 
     return cmocka_run_group_tests(tests, NULL, NULL);

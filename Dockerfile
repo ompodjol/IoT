@@ -18,18 +18,20 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Clone the public repository
-RUN git clone https://github.com/ompodjol/IoT.git
+RUN git clone https://github.com/ompodjol/IoT.git && \
+    cd IoT && \
+    git checkout first_tdd && \
+    git pull -r
 
 # Set the working directory
 WORKDIR /app/IoT
 
 # Build the application
 RUN mkdir -p build && \
-    gcc -Iinclude src/print_hello.c src/main.c -o build/print_hello
-#gcc -Iinclude src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program
+    gcc -Iinclude src/print_hello.c src/main.c -o build/print_hello -lcmocka
 
 # Compile the test application
-RUN gcc -Iinclude tests/test_print_hello.c src/print_hello.c src/main.c -lcmocka -std=c11 -o test_print_hello
+RUN gcc -Iinclude -o build/test_print_hello tests/test_print_hello.c src/print_hello.c src/main.c -lcmocka -std=c11
 
 
 # Set the entry point to run the application
