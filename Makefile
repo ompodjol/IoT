@@ -6,11 +6,12 @@ CXX ?= g++
 SRC_DIR = ./src
 TEST_DIR = ./tests
 BUILD_DIR = ./build
+INCLUDE_DIR = ./include
 COMPONENT = average
 NAME = app.elf
 
 # Search path for header files
-CFLAGS += -I$(SRC_DIR)/average
+CFLAGS += -I$(SRC_DIR)/average -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/$(COMPONENT)
 
 # List module source files
 CSOURCES = $(SRC_DIR)/main.c
