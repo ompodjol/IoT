@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <average.h>
+#include "average.h"
 
 int main()
 {
