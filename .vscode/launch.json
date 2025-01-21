@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/jollyjae/github/IoT/src",
-      "program": "/Users/jollyjae/github/IoT/src/build/Debug/outDebug"
+      "cwd": "/Users/jollyjae/github/IoT/src/average",
+      "program": "/Users/jollyjae/github/IoT/src/average/build/Debug/outDebug"
     }
   ]
 }
