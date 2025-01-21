@@ -3,7 +3,7 @@ name: Unit Tests
 on: [push]
 
 jobs:
-    docker-unit-tests;
+    docker-unit-tests:
         runs-on: ubuntu-latest
         name: Build and run unit tests Docker image
         steps:
