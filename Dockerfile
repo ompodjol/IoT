@@ -1,36 +1,26 @@
-# Use an official GCC image as the base
-FROM gcc:latest
+# Fetch ubuntu image
+FROM ubuntu:22.04
 
-# Use an official base image
-#FROM ubuntu:latest
+# Install build tools
+RUN apt update && \
+    apt install -y wget build-essential autoconf automake libtool
 
-# Install cmocka
-RUN apt-get update && \
-    apt-get install -y libcmocka-dev && \
-    apt-get install -y check
+# Copy project into image
+RUN mkdir /project
+COPY src /project/src
+COPY tests /project/tests
+COPY Makefile /project/Makefile
 
-# Install Git
-RUN apt-get update && \
-    apt-get install -y git &&\
-    rm -rf /var/lib/apt/lists/*
+# Download and build CppUTest
+RUN mkdir /project/tools/ && \
+    cd /project/ && \
+    wget https://github.com/cpputest/cpputest/releases/download/v4.0/cpputest-4.0.tar.gz && \
+    tar xf cpputest-4.0.tar.gz && \
+    mv cpputest-4.0/ tools/cpputest/ && \
+    cd tools/cpputest/ && \
+    autoreconf -i && \
+    ./configure && \
+    make
 
-# Set the working directory
-WORKDIR /app
-
-# Clone the public repository
-RUN git clone https://github.com/ompodjol/IoT.git
-
-# Set the working directory
-WORKDIR /app/IoT
-
-# Build the application
-RUN mkdir -p build && \
-    gcc -Iinclude src/print_hello.c src/main.c -o build/print_hello
-#gcc -Iinclude src/hello.c src/main.c -o build/my_esp32_devkitc_ve_program
-
-# Compile the test application
-RUN gcc -Iinclude tests/test_print_hello.c src/print_hello.c src/main.c -lcmocka -std=c11 -o test_print_hello
-
-
-# Set the entry point to run the application
-CMD ["bin/bash"]
+# Execute script
+ENTRYPOINT ["make", "test", "-C", "/project/"]
