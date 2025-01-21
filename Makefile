@@ -6,16 +6,14 @@ CXX ?= g++
 SRC_DIR = ./src
 TEST_DIR = ./tests
 BUILD_DIR = ./build
-INCLUDE_DIR = ./include
-COMPONENT = average
 NAME = app.elf
 
 # Search path for header files
-CFLAGS += -I$(SRC_DIR)/average -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/$(COMPONENT)
+CFLAGS += -I$(SRC_DIR)/average
 
 # List module source files
 CSOURCES = $(SRC_DIR)/main.c
-CSOURCES += $(wildcard $(SRC_DIR)/$(COMPONENT)/*.c)
+CSOURCES += $(wildcard $(SRC_DIR)/average/*.c)
 
 # Compile flags
 CFLAGS += -Wall
@@ -49,3 +47,14 @@ $(NAME): $(COBJECTS) | $(BUILD_DIR)
 .PHONY: clean
 clean:
 	rm -rf $(COBJECTS) $(BUILD_DIR)
+
+# Run tests
+.PHONY: test
+test:
+	make -C $(TEST_DIR)
+
+# Clean tests
+.PHONY: test_clean
+test_clean:
+	make -C $(TEST_DIR) clean
+
